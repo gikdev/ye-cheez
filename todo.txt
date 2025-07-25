@@ -1,4 +1,0 @@
-- Btn text alignment
-- Starred Task is not in Local Storage
-- Image sizes
-- 

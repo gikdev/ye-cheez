@@ -40,7 +40,7 @@ function Main() {
 	const handleGoToTasksPageBtnClick = () => navigate({ to: "/tasks" });
 	const handleDidItBtnClick = () => {
 		if (!starredTaskId) return;
-		setStarredTaskId(null);
+		setStarredTaskId("");
 		toggleTaskCompleted(starredTaskId);
 		setCelebration(true);
 	};

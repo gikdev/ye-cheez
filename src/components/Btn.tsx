@@ -35,7 +35,9 @@ export function Btn({
 			disabled={disabled}
 			onClick={onClick}
 		>
-			{IconStart && <IconStart size={20} weight={iconWeight} />}
+			{IconStart && (
+				<IconStart size={20} weight={iconWeight} className="me-auto" />
+			)}
 
 			<span className="flex gap-1">
 				{IconTextStart && <IconTextStart size={20} weight={iconWeight} />}
@@ -43,7 +45,7 @@ export function Btn({
 				{IconTextEnd && <IconTextEnd size={20} weight={iconWeight} />}
 			</span>
 
-			{IconEnd && <IconEnd size={20} weight={iconWeight} />}
+			{IconEnd && <IconEnd size={20} weight={iconWeight} className="ms-auto" />}
 		</button>
 	);
 }
@@ -56,7 +58,7 @@ function getBtnStyles(
 	let finalClassName = "";
 
 	const baseStyles =
-		"flex py-2 px-4 items-center justify-between rounded-full min-h-12 font-bold cursor-pointer ";
+		"flex py-2 px-4 items-center justify-center rounded-full min-h-12 font-bold cursor-pointer ";
 	const disabledStyles = "disabled:bg-stone-300 disabled:text-stone-500 ";
 	finalClassName += baseStyles;
 	finalClassName += disabledStyles;

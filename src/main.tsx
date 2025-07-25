@@ -5,6 +5,8 @@ import "./styles.css";
 
 import { NotFound } from "./routes/-NotFound";
 import { routeTree } from "./routeTree.gen";
+import { StarProvider } from "./shared/star.context";
+import { TasksProvider } from "./shared/tasks.context";
 
 const router = createRouter({ routeTree, defaultNotFoundComponent: NotFound });
 
@@ -23,6 +25,10 @@ if (container == null) {
 const root = ReactDOM.createRoot(container);
 root.render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<TasksProvider>
+			<StarProvider>
+				<RouterProvider router={router} />
+			</StarProvider>
+		</TasksProvider>
 	</StrictMode>,
 );

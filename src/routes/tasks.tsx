@@ -1,54 +1,61 @@
 import { CheckCircleIcon, CircleIcon, StarIcon } from "@phosphor-icons/react";
 import { createFileRoute } from "@tanstack/react-router";
+import { use } from "react";
 import { BottomBar } from "../components/BottomBar";
 import { TopBar } from "../components/TopBar";
-import { type Task, tasks } from "./-tasks";
+import { StarContext } from "../shared/star.context";
+import { type Task, TasksContext } from "../shared/tasks.context";
 
 export const Route = createFileRoute("/tasks")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const isEmpty = tasks.length <= 0;
-
 	return (
 		<div className="flex flex-col h-dvh">
 			<TopBar title="کارها" />
 
-			{isEmpty ? (
-				<main className="flex flex-col p-4 gap-8 justify-center items-center flex-1">
-					<img src="/images/clipboards.png" alt="" />
-
-					<div className="flex flex-col gap-1 text-center">
-						<p className="font-bold text-2xl text-stone-900">
-							فعلا کاری نداریم! 😁
-						</p>
-						<p>
-							میتونی از اون پایین
-							<br />
-							کار جدید تعریف کنی!
-						</p>
-					</div>
-
-					<img src="/images/arrow-down.png" alt="" />
-				</main>
-			) : (
-				<main className="flex flex-col p-4 gap-8 justify-start items-center flex-1 overflow-y-auto">
-					<div className="flex flex-col gap-2 w-full">
-						{tasks.map((t) => (
-							<TaskItem
-								key={t.id}
-								title={t.title}
-								id={t.id}
-								isCompleted={t.isCompleted}
-							/>
-						))}
-					</div>
-				</main>
-			)}
+			<TasksList />
 
 			<BottomBar />
 		</div>
+	);
+}
+
+function TasksList() {
+	const { tasks } = use(TasksContext);
+	const isEmpty = tasks.length <= 0;
+
+	return isEmpty ? (
+		<main className="flex flex-col p-4 gap-8 justify-center items-center flex-1">
+			<img src="/images/clipboards.png" alt="" />
+
+			<div className="flex flex-col gap-1 text-center">
+				<p className="font-bold text-2xl text-stone-900">
+					فعلا کاری نداریم! 😁
+				</p>
+				<p>
+					میتونی از اون پایین
+					<br />
+					کار جدید تعریف کنی!
+				</p>
+			</div>
+
+			<img src="/images/arrow-down.png" alt="" />
+		</main>
+	) : (
+		<main className="flex flex-col p-4 gap-8 justify-start items-center flex-1 overflow-y-auto">
+			<div className="flex flex-col gap-2 w-full">
+				{tasks.map((t) => (
+					<TaskItem
+						key={t.id}
+						title={t.title}
+						id={t.id}
+						isCompleted={t.isCompleted}
+					/>
+				))}
+			</div>
+		</main>
 	);
 }
 
@@ -59,15 +66,25 @@ type TaskItemProps = {
 };
 
 function TaskItem({ id, isCompleted, title }: TaskItemProps) {
-	id;
+	const { toggleTaskCompleted } = use(TasksContext);
+	const { setStarredTaskId, starredTaskId } = use(StarContext);
 
 	const IsCompletedIcon = isCompleted ? CheckCircleIcon : CircleIcon;
+	const isThisTaskStarred = starredTaskId === id;
+
+	const handleCompletedBtnClick = () => toggleTaskCompleted(id);
+	const handleStarBtnClick = () =>
+		setStarredTaskId(isThisTaskStarred ? null : id);
 
 	return (
 		<div
 			className={`flex w-full h-12 ${isCompleted ? "text-stone-600" : "text-stone-900"}`}
 		>
-			<button type="button" className="cursor-pointer p-3">
+			<button
+				type="button"
+				className="cursor-pointer p-3"
+				onClick={handleCompletedBtnClick}
+			>
 				<IsCompletedIcon size={24} />
 			</button>
 
@@ -78,8 +95,12 @@ function TaskItem({ id, isCompleted, title }: TaskItemProps) {
 				{title}
 			</button>
 
-			<button type="button" className="cursor-pointer p-3">
-				<StarIcon size={24} />
+			<button
+				type="button"
+				className={`cursor-pointer p-3 ${isThisTaskStarred ? "text-orange-500" : ""}`}
+				onClick={handleStarBtnClick}
+			>
+				<StarIcon size={24} weight={isThisTaskStarred ? "fill" : "regular"} />
 			</button>
 		</div>
 	);

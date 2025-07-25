@@ -1,10 +1,13 @@
+import { createContext } from "react";
+import useLocalStorage from "use-local-storage";
+
 export type Task = {
 	id: string;
 	title: string;
 	isCompleted: boolean;
 };
 
-export const tasks: Task[] = [
+export const sampleTasks: Task[] = [
 	{
 		id: "1e8c9c7e-4f7d-4c3c-8433-2d02b0c0adf1",
 		title: "نوشتن پروپوزال پروژه",
@@ -106,3 +109,33 @@ export const tasks: Task[] = [
 		isCompleted: true,
 	},
 ];
+
+type ITasksContext = {
+	tasks: Task[];
+	setTasks: (tasks: Task[]) => void;
+	toggleTaskCompleted: (taskId: Task["id"]) => void;
+};
+
+export const TasksContext = createContext<ITasksContext>({
+	tasks: [],
+	setTasks: () => {},
+	toggleTaskCompleted: () => {},
+});
+
+export function TasksProvider({ children }: { children: React.ReactNode }) {
+	const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", [...sampleTasks]);
+
+	const toggleTaskCompleted = (taskId: Task["id"]) => {
+		const clonedTasks = [...tasks];
+		const changedTasks = clonedTasks.map((ct) =>
+			ct.id === taskId ? { ...ct, isCompleted: !ct.isCompleted } : ct,
+		);
+		setTasks(changedTasks);
+	};
+
+	return (
+		<TasksContext value={{ tasks, setTasks, toggleTaskCompleted }}>
+			{children}
+		</TasksContext>
+	);
+}

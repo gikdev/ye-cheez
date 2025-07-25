@@ -8,6 +8,10 @@ import { use, useState } from "react";
 import { BottomBar } from "../components/BottomBar";
 import { Btn } from "../components/Btn";
 import { TopBar } from "../components/TopBar";
+import {
+	generateRandomCelebrationMessage,
+	generateRandomInspiringMessage,
+} from "../shared/randomMessages";
 import { StarContext } from "../shared/star.context";
 import { type Task, TasksContext } from "../shared/tasks.context";
 
@@ -52,7 +56,7 @@ function Main() {
 
 	return starredTask ? (
 		<main className="flex flex-col p-4 gap-8 justify-center items-center flex-1 text-center">
-			<p>انجامش بده 💪</p>
+			<p>{generateRandomInspiringMessage()}</p>
 
 			<p className="font-black text-3xl text-stone-900">{starredTask.title}</p>
 
@@ -94,7 +98,7 @@ function CelebrationContent({ onContinueBtnClick }: CelebrationContentProps) {
 			<img src="/images/celebration.png" alt="" />
 
 			<p className="font-black text-stone-900 text-center text-3xl">
-				آفرین به تو! 🎉
+				{generateRandomCelebrationMessage()}
 			</p>
 
 			<Btn

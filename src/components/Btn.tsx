@@ -37,7 +37,7 @@ export function Btn({
 		>
 			{IconStart && <IconStart size={20} weight={iconWeight} />}
 
-			<span className="">
+			<span className="flex gap-1">
 				{IconTextStart && <IconTextStart size={20} weight={iconWeight} />}
 				<span className="">{title}</span>
 				{IconTextEnd && <IconTextEnd size={20} weight={iconWeight} />}

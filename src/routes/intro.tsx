@@ -9,7 +9,8 @@ export const Route = createFileRoute("/intro")({
 function RouteComponent() {
 	const navigate = useNavigate();
 
-	const goToHomePage = () => {
+	const handleGoToHomePageBtnClick = () => {
+		localStorage.setItem("started", JSON.stringify(true));
 		navigate({ to: "/home" });
 	};
 
@@ -31,7 +32,7 @@ function RouteComponent() {
 				color="brand"
 				style="filled"
 				title="شروع"
-				onClick={goToHomePage}
+				onClick={handleGoToHomePageBtnClick}
 				IconEnd={CaretLeftIcon}
 			/>
 		</div>

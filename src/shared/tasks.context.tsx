@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import useLocalStorage from "use-local-storage";
+import { v4 as uuidv4 } from "uuid";
 
 export type Task = {
 	id: string;
@@ -114,12 +115,14 @@ type ITasksContext = {
 	tasks: Task[];
 	setTasks: (tasks: Task[]) => void;
 	toggleTaskCompleted: (taskId: Task["id"]) => void;
+	createTask: (taskTitle: Task["title"]) => void;
 };
 
 export const TasksContext = createContext<ITasksContext>({
 	tasks: [],
 	setTasks: () => {},
 	toggleTaskCompleted: () => {},
+	createTask: () => {},
 });
 
 export function TasksProvider({ children }: { children: React.ReactNode }) {
@@ -133,8 +136,19 @@ export function TasksProvider({ children }: { children: React.ReactNode }) {
 		setTasks(changedTasks);
 	};
 
+	const createTask = (taskTitle: Task["title"]) => {
+		const newTask: Task = {
+			id: uuidv4(),
+			title: taskTitle,
+			isCompleted: false,
+		};
+
+		const newTasks = [...tasks, newTask];
+		setTasks(newTasks);
+	};
+
 	return (
-		<TasksContext value={{ tasks, setTasks, toggleTaskCompleted }}>
+		<TasksContext value={{ tasks, setTasks, toggleTaskCompleted, createTask }}>
 			{children}
 		</TasksContext>
 	);

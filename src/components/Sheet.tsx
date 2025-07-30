@@ -4,11 +4,19 @@ type BottomSheetProps = {
 	onClose: () => void;
 	topBar: ReactNode;
 	children: ReactNode;
+	className?: string;
 };
 
-export function BottomSheet({ onClose, topBar, children }: BottomSheetProps) {
+export function BottomSheet({
+	onClose,
+	topBar,
+	children,
+	className,
+}: BottomSheetProps) {
 	return (
-		<div className="fixed inset-0 w-full h-dvh flex flex-col bg-black/50">
+		<div
+			className={`fixed inset-0 w-full h-dvh flex flex-col bg-black/50 ${className}`}
+		>
 			<button
 				type="button"
 				className="flex-1 w-full cursor-pointer"

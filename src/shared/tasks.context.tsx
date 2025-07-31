@@ -117,6 +117,7 @@ type ITasksContext = {
 	toggleTaskCompleted: (id: Task["id"]) => void;
 	createTask: (title: Task["title"]) => void;
 	editTask: (id: Task["id"], title: Task["title"]) => void;
+	deleteTask: (id: Task["id"]) => void;
 };
 
 export const TasksContext = createContext<ITasksContext>({
@@ -125,6 +126,7 @@ export const TasksContext = createContext<ITasksContext>({
 	toggleTaskCompleted: () => {},
 	createTask: () => {},
 	editTask: () => {},
+	deleteTask: () => {},
 });
 
 export function TasksProvider({ children }: { children: React.ReactNode }) {
@@ -159,9 +161,22 @@ export function TasksProvider({ children }: { children: React.ReactNode }) {
 		setTasks(editedTasks);
 	};
 
+	const deleteTask = (id: Task["id"]) => {
+		const editedTasks = tasks.filter((task) => task.id !== id);
+
+		setTasks(editedTasks);
+	};
+
 	return (
 		<TasksContext
-			value={{ tasks, setTasks, toggleTaskCompleted, createTask, editTask }}
+			value={{
+				tasks,
+				setTasks,
+				toggleTaskCompleted,
+				createTask,
+				editTask,
+				deleteTask,
+			}}
 		>
 			{children}
 		</TasksContext>

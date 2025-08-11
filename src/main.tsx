@@ -4,11 +4,16 @@ import ReactDOM from "react-dom/client";
 import "./styles.css";
 
 import { NotFound } from "./routes/-NotFound";
+import { Pending } from "./routes/-Pending";
 import { routeTree } from "./routeTree.gen";
 import { StarProvider } from "./shared/star.context";
 import { TasksProvider } from "./shared/tasks.context";
 
-const router = createRouter({ routeTree, defaultNotFoundComponent: NotFound });
+const router = createRouter({
+	routeTree,
+	defaultNotFoundComponent: NotFound,
+	defaultPendingComponent: Pending,
+});
 
 declare module "@tanstack/react-router" {
 	interface Register {

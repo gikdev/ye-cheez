@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./styles.css";
 
+import { ErrorPage } from "./routes/-ErrorPage";
 import { NotFound } from "./routes/-NotFound";
 import { Pending } from "./routes/-Pending";
 import { routeTree } from "./routeTree.gen";
@@ -13,6 +14,7 @@ const router = createRouter({
 	routeTree,
 	defaultNotFoundComponent: NotFound,
 	defaultPendingComponent: Pending,
+	defaultErrorComponent: ErrorPage,
 });
 
 declare module "@tanstack/react-router" {

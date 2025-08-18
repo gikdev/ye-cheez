@@ -15,7 +15,7 @@ export function BottomSheet({
 }: BottomSheetProps) {
 	return (
 		<div
-			className={`fixed inset-0 w-full h-dvh flex flex-col bg-black/50 ${className}`}
+			className={`fixed max-w-120 mx-auto inset-0 w-full h-dvh flex flex-col bg-black/50 ${className}`}
 		>
 			<button
 				type="button"

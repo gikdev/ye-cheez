@@ -130,7 +130,7 @@ export const TasksContext = createContext<ITasksContext>({
 });
 
 export function TasksProvider({ children }: { children: React.ReactNode }) {
-	const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", [...sampleTasks]);
+	const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", []);
 
 	const toggleTaskCompleted = (taskId: Task["id"]) => {
 		const clonedTasks = [...tasks];
